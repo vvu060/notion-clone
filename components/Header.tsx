@@ -7,6 +7,7 @@ import {
   UserButton,
 } from '@clerk/clerk-react';
 import { useUser } from '@clerk/nextjs';
+import Breadcrumbs from './Breadcrumbs';
 
 const Header = () => {
   const { user } = useUser();
@@ -17,7 +18,7 @@ const Header = () => {
         <h1 className='capitalize text-2xl'>{user?.firstName}&apos;s Space</h1>
       )}
 
-      {/* Breadcrumbs */}
+      <Breadcrumbs />
 
       <div>
         <SignedOut>
