@@ -66,7 +66,7 @@ const FollowPointer = ({
           scale: 0.5,
           opacity: 0,
         }}
-        className='p-2 bg-neutral-200 text-black font-bold whitespace-nowrap min-w-max text-xs rounded-full'
+        className='capitalize p-2 bg-neutral-200 text-black font-bold whitespace-nowrap min-w-max text-xs rounded-full'
       >
         {info.name || info.email}
       </motion.div>
