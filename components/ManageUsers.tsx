@@ -8,15 +8,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { FormEvent, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { Button } from './ui/button';
-import { usePathname } from 'next/navigation';
-import {
-  inviteUserToDocument,
-  removeUserFromDocument,
-} from '@/actions/actions';
+import { removeUserFromDocument } from '@/actions/actions';
 import { toast } from 'sonner';
-import { Input } from './ui/input';
 import { useUser } from '@clerk/nextjs';
 import useOwner from '@/lib/useOwner';
 import { useRoom } from '@liveblocks/react/suspense';
@@ -30,7 +25,7 @@ const ManageUsers = () => {
   const isOwner = useOwner();
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const pathname = usePathname();
+
   const [usersInRoom] = useCollection(
     user && query(collectionGroup(db, 'rooms'), where('roomId', '==', room.id))
   );
@@ -39,7 +34,13 @@ const ManageUsers = () => {
     startTransition(async () => {
       if (!userId) return;
 
-      const { success } = removeUserFromDocument(room.id, userId);
+      const { success } = await removeUserFromDocument(room.id, userId);
+
+      if (success) {
+        toast.success('User removed successfully');
+      } else {
+        toast.error('Failed to remove user');
+      }
     });
   };
 
